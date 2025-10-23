@@ -1772,35 +1772,6 @@ body {
     }
 }
 
-/* Dark mode support (optional) */
-@media (prefers-color-scheme: dark) {
-    
-    body {
-        background: linear-gradient(135deg, #1a2e1a 0%, #0d1f0d 100%);
-    }
-
-    .reports-section,
-    .page-header {
-        background: rgba(45, 80, 22, 0.95);
-        color: #fff;
-    }
-
-    .reports-table th {
-        background: #2d5016;
-        color: #ffd700;
-    }
-
-    .reports-table td {
-        border-color: #3a4a3a;
-        color: #e0e0e0;
-    }
-
-    .reports-table tr:hover {
-        background: rgba(255, 255, 255, 0.05);
-    }
-    
-}
-
 /* Ultra-wide screen optimization */
 @media (min-width: 1920px) {
     .main-content {
