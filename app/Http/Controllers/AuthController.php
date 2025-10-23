@@ -12,9 +12,11 @@ class AuthController extends Controller
 {
     public function showLogin()
     {
+        // If already authenticated, redirect to dashboard
         if (Auth::check()) {
             return redirect()->route('dashboard');
         }
+        
         return view('auth.login');
     }
 
@@ -27,10 +29,11 @@ class AuthController extends Controller
 
         $key = 'login.' . $request->ip();
 
+        // Rate limiting - max 5 attempts per minute
         if (RateLimiter::tooManyAttempts($key, 5)) {
             $seconds = RateLimiter::availableIn($key);
             throw ValidationException::withMessages([
-                'email' => ["Too many login attempts. Please try again in {$seconds} seconds."],
+                'email' => ["Terlalu banyak percobaan login. Silakan coba lagi dalam {$seconds} detik."],
             ]);
         }
 
@@ -38,25 +41,41 @@ class AuthController extends Controller
         $remember = $request->filled('remember');
 
         if (Auth::attempt($credentials, $remember)) {
+            // Regenerate session to prevent session fixation attacks
             $request->session()->regenerate();
+            
+            // Clear rate limiter
             RateLimiter::clear($key);
+            
+            // Check if user is admin
+            if (!Auth::user()->isAdmin()) {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Anda tidak memiliki akses ke sistem ini.',
+                ]);
+            }
             
             return redirect()->intended(route('dashboard'));
         }
 
+        // Increment rate limiter
         RateLimiter::hit($key, 60);
 
         throw ValidationException::withMessages([
-            'email' => ['The provided credentials do not match our records.'],
+            'email' => ['Email atau password salah.'],
         ]);
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
+        
+        // Invalidate session
         $request->session()->invalidate();
+        
+        // Regenerate CSRF token
         $request->session()->regenerateToken();
         
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Anda telah berhasil keluar.');
     }
 }
