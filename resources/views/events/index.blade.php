@@ -268,3 +268,23 @@ function addEventRow(data) {
         </td>
         <td style="padding: 12px; text-align: center;">
             <span style="color: #28a745; font-size: 20px;" title="Sent">✅</span>
+        </td>
+        <td style="padding: 12px; text-align: center;">
+            <button onclick="viewEventDetails('${data.id}')" 
+                    style="padding: 6px 12px; background: #17a2b8; color: white; border: none; border-radius: 4px; font-size: 12px; cursor: pointer;">
+                👁️ View
+            </button>
+        </td>
+    `;
+    
+    tbody.insertBefore(row, tbody.firstChild);
+}
+</script>
+
+<style>
+@keyframes highlight {
+    0% { background-color: #fff3cd; }
+    100% { background-color: white; }
+}
+</style>
+@endpush
