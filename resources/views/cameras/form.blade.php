@@ -1,156 +1,79 @@
 @extends('layouts.app')
 
-@section('title', 'Manajemen CCTV - Ssyar\'S-Intel')
+@section('title', isset($camera) ? 'Edit Kamera' : 'Tambah Kamera')
 
 @section('content')
 <div class="main-content">
     <div class="page-header">
-        <h2>Manajemen Kamera CCTV</h2>
+        <h2>{{ isset($camera) ? 'Edit' : 'Tambah' }} Kamera CCTV</h2>
     </div>
 
-    <div class="reports-section">
-        <div class="reports-header">
-            <h3>Daftar Kamera</h3>
-            <button class="btn-add" onclick="window.location='{{ route('cameras.create') }}'">+ Tambah Kamera</button>
-        </div>
+    <div class="reports-section" style="max-width: 800px; margin: 0 auto;">
+        <form method="POST" action="{{ isset($camera) ? route('cameras.update', $camera) : route('cameras.store') }}">
+            @csrf
+            @if(isset($camera))
+                @method('PUT')
+            @endif
 
-        <table class="reports-table">
-            <thead>
-                <tr>
-                    <th>Index</th>
-                    <th>Nama Kamera</th>
-                    <th>Lokasi</th>
-                    <th>RTSP URL</th>
-                    <th>Status</th>
-                    <th>Active</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($cameras as $camera)
-                <tr>
-                    <td><strong>{{ $camera->camera_index }}</strong></td>
-                    <td>{{ $camera->name }}</td>
-                    <td>{{ $camera->location ?? '-' }}</td>
-                    <td><code style="font-size: 11px;">{{ Str::limit($camera->rtsp_url, 40) }}</code></td>
-                    <td>
-                        <span class="cctv-status {{ $camera->status === 'online' ? '' : 'disconnected' }}">
-                            {{ strtoupper($camera->status) }}
-                        </span>
-                    </td>
-                    <td>
-                        <label class="switch">
-                            <input type="checkbox" 
-                                   {{ $camera->is_active ? 'checked' : '' }} 
-                                   onchange="toggleCamera({{ $camera->id }}, this)">
-                            <span class="slider"></span>
-                        </label>
-                    </td>
-                    <td>
-                        <div class="action-icons">
-                            <button class="icon-btn icon-edit" onclick="window.location='{{ route('cameras.edit', $camera) }}'">✏️</button>
-                            <button class="icon-btn icon-delete" onclick="deleteCamera({{ $camera->id }})">🗑️</button>
-                        </div>
-                        <form id="delete-camera-{{ $camera->id }}" action="{{ route('cameras.destroy', $camera) }}" method="POST" style="display: none;">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="7" style="text-align: center; padding: 40px;">
-                        Belum ada kamera. <a href="{{ route('cameras.create') }}" style="color: #2d5016; font-weight: bold;">Tambah kamera pertama</a>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+            <div class="modal-form single-column">
+                <div class="form-field">
+                    <label>Nama Kamera <span style="color: red;">*</span></label>
+                    <input type="text" name="name" id="cctvName" 
+                           value="{{ old('name', $camera->name ?? '') }}" 
+                           placeholder="Contoh: Kamera 1 - Pintu Masuk" required>
+                    @error('name')
+                        <span class="error-message" style="display: block; color: #d32f2f; font-size: 0.85rem; margin-top: 5px;">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-field">
+                    <label>Lokasi</label>
+                    <input type="text" name="location" id="cctvLocation" 
+                           value="{{ old('location', $camera->location ?? '') }}" 
+                           placeholder="Contoh: Pintu Masuk Utama">
+                    @error('location')
+                        <span class="error-message" style="display: block; color: #d32f2f; font-size: 0.85rem; margin-top: 5px;">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-field">
+                    <label>URL Stream CCTV <span style="color: red;">*</span></label>
+                    <input type="text" name="rtsp_url" id="cctvUrl" 
+                           value="{{ old('rtsp_url', $camera->rtsp_url ?? '') }}" 
+                           placeholder="rtsp://... atau http://..." required>
+                    <small style="color: #666; font-size: 0.85rem;">Masukkan URL RTSP atau HTTP stream</small>
+                    @error('rtsp_url')
+                        <span class="error-message" style="display: block; color: #d32f2f; font-size: 0.85rem; margin-top: 5px;">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-field">
+                    <label>Camera Index <span style="color: red;">*</span></label>
+                    <input type="number" name="camera_index" id="cameraIndex" 
+                           value="{{ old('camera_index', $camera->camera_index ?? $availableIndex ?? 0) }}" 
+                           required min="0"
+                           {{ isset($camera) ? 'readonly style=background:#f5f5f5;' : '' }}>
+                    <small style="color: #666; font-size: 0.85rem;">Unique identifier (0, 1, 2, 3, etc.)</small>
+                    @error('camera_index')
+                        <span class="error-message" style="display: block; color: #d32f2f; font-size: 0.85rem;margin-top: 5px;">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-field">
+                    <label style="display: flex; align-items: center;">
+                        <input type="checkbox" name="is_active" value="1" 
+                               {{ old('is_active', $camera->is_active ?? true) ? 'checked' : '' }}
+                               style="width: auto; margin-right: 10px;">
+                        <span>Aktifkan kamera (mulai monitoring otomatis)</span>
+                    </label>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="window.location='{{ route('cameras.index') }}'">Batal</button>
+                    <button type="submit" class="btn-submit">{{ isset($camera) ? '💾 Update' : '➕ Tambah' }} Kamera</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
-
-<style>
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 24px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 24px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-color: #4CAF50;
-}
-
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-</style>
 @endsection
-
-@push('scripts')
-<script>
-function toggleCamera(cameraId, checkbox) {
-    const isActive = checkbox.checked;
-    
-    fetch(`/cameras/${cameraId}/toggle`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
-        },
-        body: JSON.stringify({ is_active: isActive })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert(isActive ? 'Kamera diaktifkan' : 'Kamera dinonaktifkan');
-            setTimeout(() => window.location.reload(), 1000);
-        } else {
-            alert('Gagal mengubah status kamera');
-            checkbox.checked = !isActive;
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan');
-        checkbox.checked = !isActive;
-    });
-}
-
-function deleteCamera(cameraId) {
-    if (confirm('Apakah Anda yakin ingin menghapus kamera ini?')) {
-        document.getElementById('delete-camera-' + cameraId).submit();
-    }
-}
-</script>
-@endpush
