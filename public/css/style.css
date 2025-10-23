@@ -1176,6 +1176,741 @@ body {
     }
 }
 
+/* ========================================
+   RESPONSIVE UPDATES FOR SSYAR'S-INTEL
+   Add this to the END of your style.css file
+   ======================================== */
+
+/* Tablet and below (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+    }
+
+    .navbar-center {
+        order: 3;
+        width: 100%;
+        margin-top: 15px;
+        justify-content: center;
+    }
+
+    .navbar-right {
+        gap: 10px;
+    }
+
+    .search-box input {
+        width: 150px;
+    }
+
+    .cctv-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .summary-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .modal-form {
+        grid-template-columns: 1fr;
+    }
+
+    .reports-table {
+        font-size: 0.9rem;
+    }
+
+    .reports-table th,
+    .reports-table td {
+        padding: 10px;
+    }
+}
+
+/* Mobile landscape and below (max-width: 768px) */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    /* Login Page */
+    .login-card {
+        flex-direction: column;
+        max-width: 100%;
+        margin: 10px;
+    }
+
+    .login-left {
+        padding: 40px 20px;
+    }
+
+    .login-left h1 {
+        font-size: 2rem;
+    }
+
+    .login-left img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .login-right {
+        padding: 40px 20px;
+    }
+
+    .login-right h2 {
+        font-size: 1.5rem;
+    }
+
+    /* Navbar */
+    .navbar {
+        flex-direction: column;
+        padding: 10px 15px;
+        gap: 10px;
+    }
+
+    .navbar-left {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .navbar-left img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .navbar-title h1 {
+        font-size: 1.2rem;
+    }
+
+    .navbar-title p {
+        font-size: 0.7rem;
+    }
+
+    .navbar-center {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .nav-link {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+
+    .navbar-right {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .search-box {
+        width: 100%;
+        order: -1;
+    }
+
+    .search-box input {
+        width: 100%;
+    }
+
+    .user-info {
+        font-size: 0.85rem;
+    }
+
+    .user-name {
+        display: none;
+    }
+
+    /* Main Content */
+    .main-content {
+        padding: 20px 15px;
+    }
+
+    .page-header {
+        padding: 20px 15px;
+    }
+
+    .page-header h2 {
+        font-size: 1.5rem;
+    }
+
+    /* CCTV Grid */
+    .cctv-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .cctv-card {
+        max-width: 100%;
+    }
+
+    .add-cctv-card {
+        min-height: 250px;
+    }
+
+    /* Summary Cards */
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .summary-card {
+        padding: 20px;
+    }
+
+    .summary-card h3 {
+        font-size: 2rem;
+    }
+
+    .summary-card p {
+        font-size: 0.9rem;
+    }
+
+    /* Reports Section */
+    .reports-section {
+        padding: 15px;
+        overflow-x: auto;
+    }
+
+    .reports-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .reports-info {
+        font-size: 0.8rem;
+    }
+
+    .filter-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-section form {
+        flex-direction: column;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-export,
+    .btn-add {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Table Responsive */
+    .reports-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        font-size: 0.8rem;
+    }
+
+    .reports-table thead {
+        display: none;
+    }
+
+    .reports-table tbody {
+        display: block;
+    }
+
+    .reports-table tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        background: #fff;
+    }
+
+    .reports-table td {
+        display: block;
+        text-align: left;
+        padding: 8px;
+        border: none;
+        position: relative;
+        padding-left: 40%;
+    }
+
+    .reports-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        font-weight: bold;
+        color: #2d5016;
+    }
+
+    .reports-table td:first-child::before {
+        content: "ID Report";
+    }
+
+    .reports-table td:nth-child(2)::before {
+        content: "Jenis";
+    }
+
+    .reports-table td:nth-child(3)::before {
+        content: "Kamera";
+    }
+
+    .reports-table td:nth-child(4)::before {
+        content: "Lokasi";
+    }
+
+    .reports-table td:nth-child(5)::before {
+        content: "Waktu";
+    }
+
+    .reports-table td:nth-child(6)::before {
+        content: "Gambar";
+    }
+
+    .reports-table td:last-child::before {
+        content: "Action";
+    }
+
+    /* Pagination */
+    .pagination {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .page-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 0.85rem;
+    }
+
+    /* Modal */
+    .modal {
+        padding: 10px;
+    }
+
+    .modal-content {
+        max-width: 100%;
+        max-height: 95vh;
+    }
+
+    .modal-header {
+        padding: 15px 20px;
+    }
+
+    .modal-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .modal-body {
+        padding: 15px;
+    }
+
+    .modal-form {
+        gap: 15px;
+    }
+
+    .modal-left,
+    .modal-right {
+        width: 100%;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .btn-cancel,
+    .btn-submit {
+        width: 100%;
+    }
+
+    /* Form Fields */
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+        font-size: 1rem;
+    }
+
+    /* Dropdown Menu */
+    .dropdown-menu {
+        right: 0;
+        left: auto;
+        min-width: 180px;
+    }
+
+    .notification-dropdown {
+        right: 0;
+        left: auto;
+        min-width: 300px;
+        max-width: 90vw;
+    }
+}
+
+/* Mobile portrait (max-width: 480px) */
+@media (max-width: 480px) {
+    /* Login */
+    .login-left h1 {
+        font-size: 1.5rem;
+    }
+
+    .login-left p {
+        font-size: 0.85rem;
+    }
+
+    .assalamu {
+        font-size: 1.5rem;
+    }
+
+    /* Navbar */
+    .navbar-title h1 {
+        font-size: 1rem;
+    }
+
+    .navbar-title p {
+        display: none;
+    }
+
+    .nav-link {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    /* Page Header */
+    .page-header h2 {
+        font-size: 1.3rem;
+    }
+
+    /* Summary Grid */
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-card h3 {
+        font-size: 2.5rem;
+    }
+
+    /* CCTV Video */
+    .cctv-video {
+        height: 200px;
+    }
+
+    .play-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+
+    .btn-login {
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    /* Action Icons */
+    .action-icons {
+        justify-content: center;
+    }
+
+    .icon-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.85rem;
+    }
+
+    /* Modal */
+    .modal-content.small {
+        max-width: 100%;
+        margin: 10px;
+    }
+
+    .close-modal {
+        font-size: 1.5rem;
+        width: 30px;
+        height: 30px;
+    }
+
+    /* Notification */
+    .notification-dropdown {
+        min-width: 280px;
+    }
+
+    .notification-item {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    /* Filter Buttons */
+    .filter-btn {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+/* Landscape orientation fixes */
+@media (max-height: 500px) and (orientation: landscape) {
+    .login-card {
+        flex-direction: row;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .login-left {
+        padding: 20px;
+    }
+
+    .login-left img {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 15px;
+    }
+
+    .login-left h1 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .assalamu {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .login-right {
+        padding: 20px;
+    }
+
+    .modal-content {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
+
+/* Print styles */
+@media print {
+    .navbar,
+    .filter-section,
+    .pagination,
+    .action-icons,
+    .btn-add,
+    .btn-export {
+        display: none !important;
+    }
+
+    .main-content {
+        padding: 0;
+    }
+
+    .reports-section {
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .reports-table {
+        font-size: 10pt;
+    }
+
+    .page-header {
+        padding: 10px 0;
+    }
+}
+
+/* Touch device improvements */
+@media (hover: none) and (pointer: coarse) {
+    .btn,
+    .icon-btn,
+    .nav-link,
+    .filter-btn,
+    .page-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .cctv-card {
+        cursor: pointer;
+    }
+
+    .dropdown-menu,
+    .notification-dropdown {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-width: 100%;
+        border-radius: 15px 15px 0 0;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .cctv-status,
+    .violation-type,
+    .btn-login,
+    .btn-add {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .status-indicator {
+        animation: none;
+    }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+    
+    body {
+        background: linear-gradient(135deg, #1a2e1a 0%, #0d1f0d 100%);
+    }
+
+    .reports-section,
+    .page-header {
+        background: rgba(45, 80, 22, 0.95);
+        color: #fff;
+    }
+
+    .reports-table th {
+        background: #2d5016;
+        color: #ffd700;
+    }
+
+    .reports-table td {
+        border-color: #3a4a3a;
+        color: #e0e0e0;
+    }
+
+    .reports-table tr:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+    
+}
+
+/* Ultra-wide screen optimization */
+@media (min-width: 1920px) {
+    .main-content {
+        max-width: 1800px;
+        margin: 0 auto;
+    }
+
+    .cctv-grid {
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    }
+
+    .summary-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .navbar {
+        padding: 20px 60px;
+    }
+}
+
+/* Accessibility improvements */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Focus visible for keyboard navigation */
+*:focus-visible {
+    outline: 3px solid #ffd700;
+    outline-offset: 2px;
+}
+
+/* Smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+/* Loading states */
+.loading {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #ffd700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Utility classes for responsive design */
+.hide-mobile {
+    display: block;
+}
+
+.show-mobile {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .hide-mobile {
+        display: none !important;
+    }
+
+    .show-mobile {
+        display: block !important;
+    }
+}
+
+/* Container max-width for better readability */
+.container-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 1200px) {
+    .container-fluid {
+        max-width: 1140px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .container-fluid {
+        max-width: 1320px;
+    }
+}
+
 .hidden {
     display: none;
 }
